@@ -279,23 +279,6 @@
     color:rgba(32,28,23,0.65);
   }
 
-  .orbit-label{
-    position:absolute;
-    top:-34px; right:-30px;
-    width:100px; height:100px;
-    animation:spin 14s linear infinite;
-  }
-  @media (min-width:560px){
-    .orbit-label{ width:118px; height:118px; top:-38px; right:-40px; }
-  }
-  .orbit-label svg{ width:100%; height:100%; }
-  .orbit-label text{
-    font-family:var(--sans);
-    font-size:8.6px;
-    font-weight:600;
-    letter-spacing:0.16em;
-    fill:var(--ink);
-  }
   .orbit-badge{
     position:absolute;
     top:38%; right:-24px;
@@ -321,11 +304,6 @@
     from{ opacity:0; transform:translateY(18px); }
     to{ opacity:1; transform:translateY(0); }
   }
-  @keyframes spin{
-    from{ transform:rotate(0deg); }
-    to{ transform:rotate(360deg); }
-  }
-
   /* ---------- email band ---------- */
   .optin{
     background:var(--ink);
@@ -460,12 +438,12 @@
   }
 
   .tool-grid{
-    display:grid;
-    gap:20px;
-    grid-template-columns:1fr;
+    display:flex;
+    justify-content:center;
   }
-  @media (min-width:760px){
-    .tool-grid{ grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .tool-grid .tool-card{
+    width:100%;
+    max-width:400px;
   }
 
   .tool-card{
@@ -612,17 +590,6 @@
         </div>
 
         <div class="video-stage">
-          <div class="orbit-label" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-              <defs>
-                <path id="circlePath" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
-              </defs>
-              <text>
-                <textPath href="#circlePath" startOffset="0%">MADE WITH AI · MADE WITH AI · </textPath>
-              </text>
-            </svg>
-          </div>
-
           <div class="video-frame">
             <!-- Drop a vertical (9:16) video/embed here -->
             <div class="video-placeholder-fill">
@@ -672,20 +639,6 @@
           <div class="tool-mark">Higgsfield</div>
           <p class="desc">AI video and character generation — this is how Mika actually moves and looks consistent, shot to shot.</p>
           <a class="tool-btn" href="https://higgsfield.ai?fpr=clint-e2cef9" target="_blank" rel="noopener sponsored">Get Higgsfield (50% Off)</a>
-        </div>
-
-        <div class="tool-card">
-          <div class="tool-tag"><img src="assets/logos/heygen-mark.png" alt="HeyGen logo" loading="lazy"></div>
-          <div class="tool-mark">HeyGen</div>
-          <p class="desc">AI avatars that talk on camera — used for every talking-head clip and voiceover sync.</p>
-          <a class="tool-btn" href="https://heygen.com" target="_blank" rel="noopener sponsored">Try HeyGen</a>
-        </div>
-
-        <div class="tool-card">
-          <div class="tool-tag"><img src="assets/logos/manychat.png" alt="ManyChat logo" loading="lazy"></div>
-          <div class="tool-mark">ManyChat</div>
-          <p class="desc">Auto-DM your Instagram comments — runs the funnel that turns viewers into followers while I sleep.</p>
-          <a class="tool-btn" href="https://manychat.com" target="_blank" rel="noopener sponsored">Automate My DMs</a>
         </div>
 
       </div>
