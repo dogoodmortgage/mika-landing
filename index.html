@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mika — She's Not Real. But She's Changing How Content Gets Made.</title>
+<meta name="description" content="Meet Mika, an AI-generated creator. Get the free 7-day playbook for building your own AI influencer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream:      #f4efe6;
+    --cream-2:    #ece3d3;
+    --beige:      #e4d7c1;
+    --beige-2:    #d8c8ac;
+    --clay:       #b5654a;
+    --clay-dim:   #9c5640;
+    --ink:        #201c17;
+    --ink-soft:   #4a443c;
+    --line:       rgba(32,28,23,0.12);
+    --cream-line: rgba(244,239,230,0.16);
+
+    --serif: "Fraunces", "Times New Roman", serif;
+    --sans:  "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --container: 1120px;
+    --pad: 20px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 var(--pad);
+  }
+
+  /* grain overlay */
+  .grain{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:200;
+    opacity:0.05;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(244,239,230,0.86);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .logotype{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:22px;
+    letter-spacing:0.01em;
+  }
+  .nav-cta{
+    display:none;
+  }
+  @media (min-width:700px){
+    .nav-cta{
+      display:inline-flex;
+      align-items:center;
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      text-decoration:none;
+      padding:10px 18px;
+      border:1px solid var(--ink);
+      border-radius:999px;
+      transition:background .25s ease, color .25s ease;
+    }
+    .nav-cta:hover{ background:var(--ink); color:var(--cream); }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:56px 0 64px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-120px; right:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--beige-2), transparent 70%);
+    opacity:0.6;
+    z-index:0;
+  }
+  .hero .wrap{
+    position:relative; z-index:1;
+    display:grid;
+    gap:40px;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--clay-dim);
+    margin-bottom:18px;
+    opacity:0;
+    animation:riseIn .8s ease forwards;
+    animation-delay:.05s;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--clay);
+    display:inline-block;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(38px, 8.6vw, 68px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:15ch;
+    opacity:0;
+    animation:riseIn .9s ease forwards;
+    animation-delay:.15s;
+  }
+  .hero h1 em{
+    font-style:normal;
+    font-family:var(--sans);
+    font-weight:600;
+    color:var(--clay);
+  }
+  .hero p.sub{
+    margin-top:20px;
+    font-size:clamp(16px, 2.6vw, 19px);
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:46ch;
+    opacity:0;
+    animation:riseIn .9s ease forwards;
+    animation-delay:.28s;
+  }
+
+  .hero-media-row{
+    display:grid;
+    gap:36px;
+    align-items:center;
+  }
+  @media (min-width:860px){
+    .hero-media-row{
+      grid-template-columns:1.05fr 0.95fr;
+      gap:56px;
+    }
+  }
+
+  .hero-copy{
+    opacity:0;
+    animation:riseIn .9s ease forwards;
+    animation-delay:.38s;
+  }
+
+  .cta-primary{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.02em;
+    color:var(--cream);
+    background:var(--ink);
+    padding:17px 22px;
+    border-radius:999px;
+    border:1px solid var(--ink);
+    margin-top:30px;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), background .3s ease, color .3s ease;
+  }
+  .cta-primary:hover{
+    background:var(--clay);
+    border-color:var(--clay);
+    transform:translateY(-2px);
+  }
+  @media (min-width:560px){
+    .cta-primary{ width:auto; padding:17px 34px; }
+  }
+
+  .microcopy{
+    margin-top:12px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+  }
+
+  /* vertical video frame */
+  .video-stage{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    opacity:0;
+    animation:riseIn 1s ease forwards;
+    animation-delay:.2s;
+  }
+  .video-frame{
+    position:relative;
+    width:min(78vw, 280px);
+    aspect-ratio:9/16;
+    border-radius:26px;
+    background:
+      linear-gradient(155deg, var(--beige) 0%, var(--beige-2) 55%, var(--clay) 140%);
+    box-shadow:0 30px 60px -20px rgba(32,28,23,0.35);
+    overflow:hidden;
+    border:1px solid rgba(32,28,23,0.08);
+  }
+  .video-frame video,
+  .video-frame .video-placeholder-fill{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .video-placeholder-fill{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:14px;
+    color:var(--ink);
+  }
+  .play-btn{
+    width:52px; height:52px;
+    border-radius:50%;
+    background:rgba(244,239,230,0.92);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(32,28,23,0.25);
+  }
+  .play-btn::after{
+    content:"";
+    border-style:solid;
+    border-width:8px 0 8px 13px;
+    border-color:transparent transparent transparent var(--ink);
+    margin-left:3px;
+  }
+  .video-placeholder-fill span{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(32,28,23,0.65);
+  }
+
+  .orbit-label{
+    position:absolute;
+    top:-34px; right:-30px;
+    width:100px; height:100px;
+    animation:spin 14s linear infinite;
+  }
+  @media (min-width:560px){
+    .orbit-label{ width:118px; height:118px; top:-38px; right:-40px; }
+  }
+  .orbit-label svg{ width:100%; height:100%; }
+  .orbit-label text{
+    font-family:var(--sans);
+    font-size:8.6px;
+    font-weight:600;
+    letter-spacing:0.16em;
+    fill:var(--ink);
+  }
+  .orbit-badge{
+    position:absolute;
+    top:38%; right:-24px;
+    transform:translateY(-50%);
+    width:60px; height:60px;
+    border-radius:50%;
+    background:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+  }
+  @media (min-width:560px){
+    .orbit-badge{ width:70px; height:70px; right:-28px; }
+  }
+  .orbit-badge span{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--cream);
+    font-size:11px;
+    line-height:1.15;
+    text-align:center;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes spin{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+  }
+
+  /* ---------- email band ---------- */
+  .optin{
+    background:var(--ink);
+    color:var(--cream);
+    padding:64px 0;
+    position:relative;
+  }
+  .optin::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(600px 240px at 15% 0%, rgba(181,101,74,0.28), transparent 70%);
+    pointer-events:none;
+  }
+  .optin .wrap{ position:relative; text-align:center; }
+  .optin-kicker{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--clay);
+    margin-bottom:14px;
+  }
+  .optin h2{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(24px, 4.4vw, 34px);
+    line-height:1.28;
+    max-width:22ch;
+    margin:0 auto;
+  }
+  .optin p.detail{
+    margin:14px auto 0;
+    max-width:38ch;
+    font-size:14.5px;
+    color:rgba(244,239,230,0.68);
+  }
+
+  form.optin-form{
+    margin:34px auto 0;
+    max-width:440px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  @media (min-width:560px){
+    form.optin-form{
+      flex-direction:row;
+      background:var(--cream);
+      border-radius:999px;
+      padding:6px;
+      gap:0;
+    }
+  }
+
+  .optin-form input[type="email"]{
+    width:100%;
+    font-family:var(--sans);
+    font-size:15px;
+    color:var(--ink);
+    background:var(--cream);
+    border:1px solid var(--cream-line);
+    border-radius:999px;
+    padding:16px 20px;
+    outline:none;
+  }
+  form.optin-form input[type="email"]::placeholder{ color:rgba(32,28,23,0.45); }
+  @media (min-width:560px){
+    .optin-form input[type="email"]{
+      border:none;
+      padding:12px 18px;
+      flex:1;
+    }
+  }
+
+  .optin-form button{
+    width:100%;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    color:var(--cream);
+    background:var(--clay);
+    border:none;
+    border-radius:999px;
+    padding:16px 22px;
+    cursor:pointer;
+    transition:background .25s ease, transform .25s ease;
+    white-space:nowrap;
+  }
+  .optin-form button:hover{ background:var(--clay-dim); transform:translateY(-1px); }
+  @media (min-width:560px){
+    .optin-form button{ width:auto; padding:12px 26px; }
+  }
+
+  .optin-status{
+    margin-top:16px;
+    font-size:13.5px;
+    min-height:18px;
+    color:var(--beige-2);
+  }
+  .optin-status.success{ color:#c7d9b4; }
+
+  .optin-fineprint{
+    margin-top:26px;
+    font-size:11.5px;
+    color:rgba(244,239,230,0.4);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- tools ---------- */
+  .tools{
+    padding:76px 0 84px;
+  }
+  .tools-head{
+    text-align:center;
+    margin-bottom:44px;
+  }
+  .tools-head .optin-kicker{ color:var(--clay-dim); }
+  .tools h2{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(28px, 5vw, 40px);
+  }
+  .tools-head p{
+    margin-top:12px;
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:40ch;
+    margin-left:auto; margin-right:auto;
+  }
+
+  .tool-grid{
+    display:grid;
+    gap:20px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:760px){
+    .tool-grid{ grid-template-columns:repeat(3, 1fr); gap:24px; }
+  }
+
+  .tool-card{
+    background:var(--beige);
+    border:1px solid rgba(32,28,23,0.07);
+    border-radius:20px;
+    padding:28px 26px 26px;
+    display:flex;
+    flex-direction:column;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, background .35s ease;
+  }
+  .tool-card:hover{
+    transform:translateY(-6px);
+    background:var(--beige-2);
+    box-shadow:0 24px 40px -22px rgba(32,28,23,0.35);
+  }
+
+  .tool-mark{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:22px;
+    margin-bottom:18px;
+  }
+  .tool-tag{
+    width:48px; height:48px;
+    border-radius:12px;
+    background:#ffffff;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px;
+    box-shadow:0 1px 2px rgba(32,28,23,0.08), inset 0 0 0 1px rgba(32,28,23,0.06);
+    overflow:hidden;
+  }
+  .tool-tag img{
+    width:72%; height:72%;
+    object-fit:contain;
+  }
+  .tool-card p.desc{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    line-height:1.5;
+    flex:1;
+    margin-bottom:22px;
+  }
+  .tool-btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    font-size:13.5px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--ink);
+    background:transparent;
+    border:1.5px solid var(--ink);
+    border-radius:999px;
+    padding:13px 18px;
+    transition:background .25s ease, color .25s ease;
+  }
+  .tool-btn:hover{ background:var(--ink); color:var(--cream); }
+  .tool-card.featured{
+    background:var(--ink);
+    color:var(--cream);
+  }
+  .tool-card.featured p.desc{ color:rgba(244,239,230,0.7); }
+  .tool-card.featured .tool-btn{
+    border-color:var(--clay);
+    background:var(--clay);
+    color:var(--cream);
+  }
+  .tool-card.featured .tool-btn:hover{ background:var(--clay-dim); border-color:var(--clay-dim); }
+  .tool-card.featured:hover{ background:#2a251e; }
+  .badge-off{
+    display:inline-block;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    color:var(--ink);
+    background:var(--clay);
+    color:var(--cream);
+    padding:4px 9px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .tool-card.featured .badge-off{ background:var(--cream); color:var(--ink); }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:30px 0 40px;
+  }
+  footer .wrap{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    text-align:center;
+  }
+  footer p{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+  footer p.copyright{
+    color:rgba(32,28,23,0.45);
+  }
+  @media (min-width:640px){
+    footer .wrap{
+      flex-direction:row;
+      justify-content:space-between;
+      text-align:left;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <span class="logotype">mika</span>
+    <a class="nav-cta" href="#optin">Get the Playbook</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-media-row">
+        <div>
+          <span class="eyebrow">100% AI‑generated creator</span>
+          <h1>She's not real. But she's <em>changing</em> how content gets made.</h1>
+
+          <div class="hero-copy">
+            <p class="sub">Meet Mika — built entirely with AI. Here's the exact playbook I used to create her, from face to feed to first 10K.</p>
+            <a href="#optin" class="cta-primary">Get the Free Playbook</a>
+            <p class="microcopy">7-day guide · free · no fluff</p>
+          </div>
+        </div>
+
+        <div class="video-stage">
+          <div class="orbit-label" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs>
+                <path id="circlePath" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
+              </defs>
+              <text>
+                <textPath href="#circlePath" startOffset="0%">MADE WITH AI · MADE WITH AI · </textPath>
+              </text>
+            </svg>
+          </div>
+
+          <div class="video-frame">
+            <!-- Drop a vertical (9:16) video/embed here -->
+            <div class="video-placeholder-fill">
+              <div class="play-btn"></div>
+              <span>Vertical video</span>
+            </div>
+          </div>
+
+          <div class="orbit-badge"><span>watch<br>the drop</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL OPT-IN -->
+  <section class="optin" id="optin">
+    <div class="wrap">
+      <p class="optin-kicker">Free playbook</p>
+      <h2>The 7-day guide to building your own AI influencer.</h2>
+      <p class="detail">Free. No fluff. Just the exact steps, tools, and prompts.</p>
+
+      <form class="optin-form" id="optinForm" novalidate>
+        <label for="email" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" required autocomplete="email">
+        <button type="submit">Send It to My Inbox</button>
+      </form>
+      <p class="optin-status" id="optinStatus" role="status" aria-live="polite"></p>
+
+      <p class="optin-fineprint">Unsubscribe anytime. Your inbox, your rules.</p>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="tools" id="tools">
+    <div class="wrap">
+      <div class="tools-head">
+        <p class="optin-kicker">The stack</p>
+        <h2>The tools I used</h2>
+        <p>No secrets, no gatekeeping — this is exactly what built Mika.</p>
+      </div>
+
+      <div class="tool-grid">
+
+        <div class="tool-card featured">
+          <span class="badge-off">50% OFF</span>
+          <div class="tool-tag"><img src="assets/logos/higgsfield.png" alt="Higgsfield logo" loading="lazy"></div>
+          <div class="tool-mark">Higgsfield</div>
+          <p class="desc">AI video and character generation — this is how Mika actually moves and looks consistent, shot to shot.</p>
+          <a class="tool-btn" href="https://higgsfield.ai?fpr=clint-e2cef9" target="_blank" rel="noopener sponsored">Get Higgsfield (50% Off)</a>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-tag"><img src="assets/logos/heygen-mark.png" alt="HeyGen logo" loading="lazy"></div>
+          <div class="tool-mark">HeyGen</div>
+          <p class="desc">AI avatars that talk on camera — used for every talking-head clip and voiceover sync.</p>
+          <a class="tool-btn" href="https://heygen.com" target="_blank" rel="noopener sponsored">Try HeyGen</a>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-tag"><img src="assets/logos/manychat.png" alt="ManyChat logo" loading="lazy"></div>
+          <div class="tool-mark">ManyChat</div>
+          <p class="desc">Auto-DM your Instagram comments — runs the funnel that turns viewers into followers while I sleep.</p>
+          <a class="tool-btn" href="https://manychat.com" target="_blank" rel="noopener sponsored">Automate My DMs</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Some links are affiliate links. I only recommend tools I actually use.</p>
+    <p class="copyright">© Mika 2026</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var form = document.getElementById('optinForm');
+    var status = document.getElementById('optinStatus');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('email');
+      var value = email.value.trim();
+      var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!re.test(value)){
+        status.textContent = 'Enter a valid email — we want it to actually arrive.';
+        status.classList.remove('success');
+        return;
+      }
+      // NOTE: no email service connected yet — wire this submit handler
+      // to your provider (Mailchimp, Beehiiv, ConvertKit, etc.) to go live.
+      status.textContent = "You're on the list — check your inbox for day one.";
+      status.classList.add('success');
+      form.reset();
+    });
+  })();
+</script>
+
+</body>
+</html>
